@@ -1,0 +1,20 @@
+let registry = new WeakMap();
+function getLoggables(parent) {
+    return registry.get(parent || nullParent) || [];
+}
+export function registerLoggable(loggable, config, parent) {
+    const values = getLoggables(parent);
+    values.push({ loggable, config, parent });
+    registry.set(parent || nullParent, values);
+}
+export function getNonDomState(parent) {
+    return { loggables: [...getLoggables(parent)] };
+}
+export function unregisterLoggables(parent) {
+    registry.delete(parent || nullParent);
+}
+export function unregisterAllLoggables() {
+    registry = new WeakMap();
+}
+const nullParent = {};
+//# sourceMappingURL=NonDomState.js.map
